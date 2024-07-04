@@ -87,6 +87,8 @@ pub enum ReadlineEvent {
 	Eof,
 	/// The user pressed Ctrl-C
 	Interrupted,
+	/// The user pressed Ctrl-\
+	Quit,
 }
 
 /// Clonable object that implements [`Write`][std::io::Write] and
