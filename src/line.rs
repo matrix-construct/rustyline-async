@@ -198,6 +198,12 @@ impl LineState {
 					self.clear(term)?;
 					return Ok(Some(ReadlineEvent::Eof));
 				}
+				// End of program (CTRL-\)
+				KeyCode::Char('4') => {
+					writeln!(term)?;
+					self.clear(term)?;
+					return Ok(Some(ReadlineEvent::Quit));
+				}
 				// End of text (CTRL-C)
 				KeyCode::Char('c') => {
 					if self.should_print_line_on_control_c {
