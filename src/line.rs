@@ -12,6 +12,8 @@ use unicode_width::UnicodeWidthStr;
 
 use crate::{History, ReadlineError, ReadlineEvent};
 
+pub type Completer = dyn Fn(&str) -> String + Send + Sync;
+
 #[derive(Default)]
 pub struct LineState {
 	// Unicode Line
@@ -33,6 +35,8 @@ pub struct LineState {
 	term_size: (u16, u16),
 
 	pub history: History,
+
+	pub completer: Option<Box<Completer>>,
 }
 
 impl LineState {
@@ -399,6 +403,15 @@ impl LineState {
 					if let Some(line) = self.history.search_previous(&self.line) {
 						self.line.clear();
 						self.line += line;
+						self.clear(term)?;
+						self.move_cursor(100000)?;
+						self.render(term)?;
+					}
+				}
+				KeyCode::Tab => {
+					// tab completion callback
+					if let Some(completer) = self.completer.as_ref() {
+						self.line = completer(&self.line);
 						self.clear(term)?;
 						self.move_cursor(100000)?;
 						self.render(term)?;
