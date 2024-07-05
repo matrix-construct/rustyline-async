@@ -318,6 +318,13 @@ impl Readline {
 	pub fn clear_history(&mut self) {
 		self.set_history_entries([]);
 	}
+
+	pub fn set_tab_completer<F>(&mut self, completer: F)
+		where
+			F: Fn(&str) -> String + Send + Sync + 'static,
+	{
+		let _ = self.line.completer.insert(Box::new(completer));
+	}
 }
 
 impl Drop for Readline {
