@@ -1,6 +1,6 @@
 [package]
 name = "rustyline-async"
-version = "0.4.2"
+version = "0.4.3"
 license = "Unlicense"
 description = "A minimal readline with multiline and async support."
 documentation = "https://docs.rs/rustyline-async"
@@ -9,7 +9,7 @@ readme = "README.md"
 edition = "2021"
 
 [dependencies]
-crossterm = { version = "0.27.0", features = ["event-stream"] }
+crossterm = { version = "0.28.1", features = ["event-stream"] }
 futures-channel = "0.3"
 futures-util = { version = "0.3", features = ["io"] }
 pin-project = "1.0"
